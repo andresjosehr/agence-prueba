@@ -135,3 +135,10 @@ DIV.cont {
                border-top: 1 solid #888; border-bottom: 1 solid white }
 .style3 {color: #000000}
 
+.cust_tat {
+  border-collapse: collapse;
+}
+
+.cust_tat, .cust_tat th, .cust_tat td {
+  border: 1px solid black;
+}

@@ -312,3 +312,13 @@ DIV.cont {
   color: #000000;
 }
 
+.cust_tat {
+  border-collapse: collapse;
+}
+
+.cust_tat,
+.cust_tat th,
+.cust_tat td {
+  border: 1px solid black;
+}
+

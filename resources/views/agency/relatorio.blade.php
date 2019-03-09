@@ -1,5 +1,5 @@
 @for ($i = 0; $i <count($Datos); $i++)
-  <table cellspacing=1 cellpadding=3 width="100%" 
+  <table class="cust_tat" cellspacing=1 cellpadding=3 width="100%" 
                   bgcolor=#cccccc  id="pesquisaAvancada">
                 <tbody>
                   <tr bgcolor=#efefef>
@@ -35,10 +35,10 @@
                   @endfor
                   <tr bgcolor=#efefef>
                     <td nowrap bgcolor="#efefef"><strong>SALDO</strong></td>
-                    <td><div align="right"><font color="#000000"><?php  echo array_sum($Datos[$Usuarios[$i]]["Ganancias"]) ?>   </font></div></td>
-                    <td><div align="right"><font color="#000000">R$<?php echo array_sum($SaldoCosto) ?>                      </font></div></td>
-                    <td><div align="right"><font color="#000000">R$<?php echo array_sum($Datos[$Usuarios[$i]]["Comision"]) ?></font></div></td>
-                    <td><div align="right"><font color="#0000FF"><?php  echo array_sum($Datos[$Usuarios[$i]]["Lucro"]) ?>       </font></div></td>
+                    <td><div align="right"><font color="#000000">R$ <?php  echo array_sum($Datos[$Usuarios[$i]]["Ganancias"]) ?>   </font></div></td>
+                    <td><div align="right"><font color="#000000">R$ <?php echo array_sum($SaldoCosto) ?>                      </font></div></td>
+                    <td><div align="right"><font color="#000000">R$ <?php echo array_sum($Datos[$Usuarios[$i]]["Comision"]) ?></font></div></td>
+                    <td><div align="right"><font color="#0000FF">R$ <?php  echo array_sum($Datos[$Usuarios[$i]]["Lucro"]) ?>       </font></div></td>
                   </tr>
                 </tbody>
               </table>

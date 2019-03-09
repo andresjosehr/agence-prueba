@@ -120,7 +120,7 @@
                               </tr>
                            </table>
                            <br>
-                           <table width="100%" cellpadding="3" cellspacing="1" 
+                           <table class="cust_tat" width="100%" cellpadding="3" cellspacing="1" 
                               bgcolor="#cccccc"  id="pesquisaAvancada">
                               <tbody>
                                  <tr bgcolor="#fafafa">
