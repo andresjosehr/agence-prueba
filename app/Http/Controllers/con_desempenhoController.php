@@ -14,10 +14,10 @@ class con_desempenhoController extends Controller{
 
 		$Consultores= CoUsuario::join('permissao_sistema', 'cao_usuario.co_usuario', '=', 'permissao_sistema.co_usuario')
 				     ->where([
-							    ['PERMISSAO_SISTEMA.CO_SISTEMA', '=', '1'],
-							    ['PERMISSAO_SISTEMA.IN_ATIVO', '=', 'S'],
+							    ['permissao_sistema.co_sistema', '=', '1'],
+							    ['permissao_sistema.in_ativo', '=', 'S'],
 							])
-				     ->whereIn('PERMISSAO_SISTEMA.IN_ATIVO', array(0, 1, 1))
+				     ->whereIn('permissao_sistema.in_ativo', array(0, 1, 1))
 						    ->getQuery() // Optional: downgrade to non-eloquent builder so we don't build invalid User objects.
 						    ->get();
 
@@ -37,16 +37,16 @@ class con_desempenhoController extends Controller{
 
     	  // $Datos["Custo"] = DB::table("CAO_SALARIO")->whereIn("co_usuario", $Request->Usuarios)->get();
 
-    	  $Fact= CoFatura::join('CAO_OS', 'CAO_FATURA.CO_OS', '=', 'CAO_OS.CO_OS')
-    	  					->join('CAO_USUARIO', 'CAO_OS.CO_USUARIO', '=', 'CAO_USUARIO.CO_USUARIO')
-    	  					->join('CAO_SALARIO', 'CAO_SALARIO.CO_USUARIO', '=', 'CAO_USUARIO.CO_USUARIO')
+    	  $Fact= CoFatura::join('cao_os', 'cao_fatura.co_os', '=', 'cao_os.co_os')
+    	  					->join('cao_usuario', 'cao_os.co_usuario', '=', 'cao_usuario.co_usuario')
+    	  					->join('cao_salario', 'cao_salario.co_usuario', '=', 'cao_usuario.co_usuario')
 				     ->where([
-							    ['DATA_EMISSAO', '>=', $Request->FechaInicio],
-							    ['DATA_EMISSAO', '<=', $Request->FechaFin],
+							    ['data_emissao', '>=', $Request->FechaInicio],
+							    ['data_emissao', '<=', $Request->FechaFin],
 							])
-				     ->whereIn('CAO_USUARIO.CO_USUARIO', $Request->Usuarios)
-				     ->orderBy("DATA_EMISSAO", "ASC")
-						    ->getQuery() // Optional: downgrade to non-eloquent builder so we don't build invalid User objects.
+				     ->whereIn('cao_usuario.co_usuario', $Request->Usuarios)
+				     ->orderBy("data_emissao", "ASC")
+						    ->getQuery() 
 						    ->get();
 
 			$Fact = json_decode(json_encode($Fact), true);
@@ -103,16 +103,16 @@ class con_desempenhoController extends Controller{
 
     	  // $Datos["Custo"] = DB::table("CAO_SALARIO")->whereIn("co_usuario", $Request->Usuarios)->get();
 
-    	  $Fact= CoFatura::join('CAO_OS', 'CAO_FATURA.CO_OS', '=', 'CAO_OS.CO_OS')
-    	  					->join('CAO_USUARIO', 'CAO_OS.CO_USUARIO', '=', 'CAO_USUARIO.CO_USUARIO')
-    	  					->join('CAO_SALARIO', 'CAO_SALARIO.CO_USUARIO', '=', 'CAO_USUARIO.CO_USUARIO')
+    	  $Fact= CoFatura::join('cao_os', 'cao_fatura.co_os', '=', 'cao_os.co_os')
+    	  					->join('cao_usuario', 'cao_os.co_usuario', '=', 'cao_usuario.co_usuario')
+    	  					->join('cao_salario', 'cao_salario.co_usuario', '=', 'cao_usuario.co_usuario')
 				     ->where([
-							    ['DATA_EMISSAO', '>=', $Request->FechaInicio],
-							    ['DATA_EMISSAO', '<=', $Request->FechaFin],
+							    ['data_emissao', '>=', $Request->FechaInicio],
+							    ['data_emissao', '<=', $Request->FechaFin],
 							])
-				     ->whereIn('CAO_USUARIO.CO_USUARIO', $Request->Usuarios)
-				     ->orderBy("DATA_EMISSAO", "ASC")
-						    ->getQuery() // Optional: downgrade to non-eloquent builder so we don't build invalid User objects.
+				     ->whereIn('cao_usuario.co_usuario', $Request->Usuarios)
+				     ->orderBy("data_emissao", "ASC")
+						    ->getQuery() 
 						    ->get();
 
 			$Fact = json_decode(json_encode($Fact), true);
@@ -187,18 +187,18 @@ class con_desempenhoController extends Controller{
 			  $l++;
 			}
 
-    	  // $Datos["Custo"] = DB::table("CAO_SALARIO")->whereIn("co_usuario", $Request->Usuarios)->get();
+    	  
 
-    	  $Fact= CoFatura::join('CAO_OS', 'CAO_FATURA.CO_OS', '=', 'CAO_OS.CO_OS')
-    	  					->join('CAO_USUARIO', 'CAO_OS.CO_USUARIO', '=', 'CAO_USUARIO.CO_USUARIO')
-    	  					->join('CAO_SALARIO', 'CAO_SALARIO.CO_USUARIO', '=', 'CAO_USUARIO.CO_USUARIO')
+    	  $Fact= CoFatura::join('cao_os', 'cao_fatura.co_os', '=', 'cao_os.co_os')
+    	  					->join('cao_usuario', 'cao_os.co_usuario', '=', 'cao_usuario.co_usuario')
+    	  					->join('cao_salario', 'cao_salario.co_usuario', '=', 'cao_usuario.co_usuario')
 				     ->where([
-							    ['DATA_EMISSAO', '>=', $Request->FechaInicio],
-							    ['DATA_EMISSAO', '<=', $Request->FechaFin],
+							    ['data_emissao', '>=', $Request->FechaInicio],
+							    ['data_emissao', '<=', $Request->FechaFin],
 							])
-				     ->whereIn('CAO_USUARIO.CO_USUARIO', $Request->Usuarios)
-				     ->orderBy("DATA_EMISSAO", "ASC")
-						    ->getQuery() // Optional: downgrade to non-eloquent builder so we don't build invalid User objects.
+				     ->whereIn('cao_usuario.co_usuario', $Request->Usuarios)
+				     ->orderBy("data_emissao", "ASC")
+						    ->getQuery() 
 						    ->get();
 
 			$Fact = json_decode(json_encode($Fact), true);
@@ -264,7 +264,7 @@ class con_desempenhoController extends Controller{
 				$Dataset=$Dataset.$Data[$i];
 			}
 
-			$Salario=DB::table("CAO_SALARIO")->select("brut_salario")
+			$Salario=DB::table("cao_salario")->select("brut_salario")
 									->whereIn('CO_USUARIO', $Request->Usuarios)->get();
 			$Salario = json_decode(json_encode($Salario), true);
 			$Sal=0;

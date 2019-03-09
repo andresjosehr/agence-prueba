@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class CoUsuario extends Model
 {
-    protected $table = 'cao_usuario';
+    protected $table = 'interli1_agence.cao_usuario';
 }
