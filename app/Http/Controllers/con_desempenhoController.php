@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\CoUsuario;
 use App\CoFatura;
+use App\User;
 use DB;
 
 
@@ -75,6 +76,9 @@ class con_desempenhoController extends Controller{
 					
 			}	
 
+      
+ 
+
 			for ($i=0; $i <count($Request->Usuarios); $i++) {
 				for ($j=0; $j <count($FechaMedia); $j++) {
 					if (isset($Datos[$Request->Usuarios[$i]]["Ganancias"][date("Y-m", strtotime($FechaMedia[$j]))])) {
@@ -86,7 +90,7 @@ class con_desempenhoController extends Controller{
 				}
 			}
 
-			return view("agency.relatorio", ["Datos" => $Datos, "FechaMedia" => $FechaMedia, "Usuarios" => $Request->Usuarios]);
+			return view("agency.relatorio", ["Datos" => $Datos, "FechaMedia" => $FechaMedia, "Usuarios" => $Request->Usuarios, "No_User" => json_decode(json_encode(User::select("no_usuario")->whereIn('co_usuario', $Request->Usuarios)->get()), true)]);
 
     }
 
