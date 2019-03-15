@@ -121,7 +121,7 @@
                     }
 
 
- window.onload= function(){
+                        window.onload= function(){
                             $('#date1').datepicker({
                                 autoclose: true,
                                 minViewMode: 1,
@@ -144,7 +144,7 @@
                             $('#my-select').multiSelect()
                           }
 
-                               window.relatorio=function (url) {
+                               window.relatorio=function (url, loader) {
                                     $.ajaxSetup({
                                       headers: {
                                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -162,6 +162,7 @@
                                           if (FechaInicio>FechaFin) {
                                             alert("La fecha de inicio debe ser menor que la fecha final")
                                           } else{
+                                             MostrarLoaders(loader);
                                              $("#contenedor").load(url,{
                                               Usuarios: User,
                                               FechaInicio: FechaInicio+"-01",
@@ -170,4 +171,16 @@
                                           }
 
                                         }
+                                  }
+
+                                  window.MostrarLoaders=function(num) {
+                                    $(".btn"+num ).fadeOut(250, function () {
+                                      $(".load"+num).fadeIn(250);
+                                    });
+                                  }
+
+                                  window.OcultarLoaders=function(num) {
+                                    $(".load"+num ).fadeOut(250, function () {
+                                      $(".btn"+num).fadeIn(250);
+                                    });
                                   }

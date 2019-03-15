@@ -29,6 +29,7 @@
                 </div>
                 <script>
                     var Datica_=[@for ($i = 0; $i <count($Usuarios) ; $i++) valores['{{$i}}'], @endfor];
-                    BarChart(FechaMedia, Datica_)
+                    BarChart(FechaMedia, Datica_);
+                    OcultarLoaders("2");
                   </script>
             <br><br>

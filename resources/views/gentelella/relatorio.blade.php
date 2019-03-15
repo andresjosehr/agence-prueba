@@ -81,3 +81,6 @@
                 unset($SaldoCosto)
               @endphp
             @endfor
+            <script>
+              OcultarLoaders("1");
+            </script>

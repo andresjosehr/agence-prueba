@@ -20,5 +20,4 @@
     require ("../gentelella/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js");
     // require ("../gentelella/vendors/moment/min/moment.min.js");
     // require ("../gentelella/vendors/bootstrap-daterangepicker/daterangepicker.js");
-	require	("../gentelella/build/js/custom.min.js");
     require ("../gentelella/custom.js");

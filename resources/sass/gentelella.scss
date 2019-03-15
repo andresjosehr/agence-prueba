@@ -9,4 +9,47 @@
 
     .html_style{
 	    background: white;
-	}
+	   }
+
+    .ms-selectable, .ms-selection{
+      width: 48%!important;
+    }
+    @media only screen and (min-width: 992px) {
+      .btns{
+        padding-top: 73px !important;
+      }
+    }
+
+     @media only screen and (max-width: 992px) {
+      .btns{
+        display: contents;
+      }
+    }
+      .ms-container{
+        width: 100%;
+      }
+      .loading{
+     border-radius:150px;
+     border:6px solid #797979;
+     border-top-color:rgba(0,0,0,0.3);
+     box-sizing:border-box;
+     position: relative;
+     animation:vina-loading 1.2s linear infinite;
+     -webkit-animation:vina-loading 1.2s linear infinite;
+     z-index: 1;
+     display: none;
+     }
+     .button_loading{
+       width: 33.34px;
+       height: 33.34px;
+       left: 46%;
+       top: -3px;
+     }
+     @keyframes vina-loading{
+     0%{transform:rotate(0deg)}
+     100%{transform:rotate(360deg)}
+     }
+     @-webkit-keyframes vina-loading{
+     0%{-webkit-transform:rotate(0deg)}
+     100%{-webkit-transform:rotate(360deg)}
+    }

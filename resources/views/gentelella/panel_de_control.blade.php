@@ -7,20 +7,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel=”shortcut icon” type=”image/png” href="{{asset('img/favico.ico')}}" />
 	<link rel="icon" href="images/favicon.ico" type="image/ico" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/multi-select/0.9.12/css/multi-select.min.css">
 
     <title>Agence | Panel de Control </title>
 
     <link rel="stylesheet" href="{{asset('css/gentelella.css')}}">
     <style>
-      .ms-container{
-        width: 100%;
-      }
     </style>
   </head>
 
@@ -283,9 +281,12 @@
                         </div>
                         </div>
                         <div class="col-md-4 hidden-small btns">
-                          <button onclick="relatorio('<?php echo Request::root(); ?>/relatorio')" type="button" class="btn btn-round btn-primary btn-block">Relatorio</button>
-                          <button onclick="relatorio('<?php echo Request::root(); ?>/grafico')" type="button" class="btn btn-round btn-warning btn-block">Grafico</button>
-                          <button onclick="relatorio('<?php echo Request::root(); ?>/pizza')" type="button" class="btn btn-round btn-danger btn-block">Pizza</button>
+                          <button onclick="relatorio('<?php echo Request::root(); ?>/relatorio', '1')" type="button" class="btn btn1 btn-round btn-primary btn-block">Relatorio</button>
+                          <div class="loading button_loading load1"></div>
+                          <button onclick="relatorio('<?php echo Request::root(); ?>/grafico', '2')" type="button" class="btn btn2 btn-round btn-warning btn-block">Grafico</button>
+                          <div class="loading button_loading load2"></div>
+                          <button onclick="relatorio('<?php echo Request::root(); ?>/pizza', '3')" type="button" class="btn btn3 btn-round btn-danger btn-block">Pizza</button>
+                          <div class="loading button_loading load3"></div>
                         </div>
                       </div>
                     </div>
@@ -306,23 +307,7 @@
         <!-- /footer content -->
       </div>
     </div>
-
-    <style> 
-    .ms-selectable, .ms-selection{
-      width: 48%!important;
-    }
-    @media only screen and (min-width: 992px) {
-      .btns{
-        padding-top: 73px !important;
-      }
-    }
-
-     @media only screen and (max-width: 992px) {
-      .btns{
-        display: contents;
-      }
-    }
-  </style>
+  <script></script>
 
     <script src="{{asset('js/gentelella.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/multi-select/0.9.12/js/jquery.multi-select.min.js"></script>

@@ -29,5 +29,6 @@
                 </div>
                 <script>
                   PieChart();
+                  OcultarLoaders("3");
                   </script>
             <br><br>

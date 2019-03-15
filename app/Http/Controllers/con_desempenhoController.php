@@ -175,10 +175,14 @@ class con_desempenhoController extends Controller{
 				$Data[$i]=array_sum($Datos[$Request->Usuarios[$i]]["Ganancias"]);
 				$Color[$i]="#".self::random_color();
 			}
+			$Usuarios = User::select("no_usuario")->whereIn('co_usuario', $Request->Usuarios)->get();
+			for ($i=0; $i <count($Usuarios) ; $i++) { 
+				$Usr[$i]=$Usuarios[$i]->no_usuario;
+			}
 			?><script>
-				var Usuarios = '<?php echo json_encode($Request->Usuarios) ?>'
 	         	var Data = '<?php echo json_encode($Data) ?>'
 	         	var Color = '<?php echo json_encode($Color) ?>'
+	         	var Usuarios = '<?php echo json_encode($Usr) ?>'
 	         	PrincipioPie();
 			</script><?php
 				return view("gentelella.pie_chart");
