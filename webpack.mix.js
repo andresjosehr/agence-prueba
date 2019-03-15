@@ -11,12 +11,6 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/custom.js', 'public/js/custom.js')
+mix.setResourceRoot ('../')
    .sass('resources/sass/app.scss', 'public/css/custom.css')
-   .scripts([
-   		'node_modules/jquery/dist/jquery.js',
-	    'resources/js/agency/popcalendar.js',
-	    'resources/js/agency/cor_fundo.js',
-	    'resources/js/agency/menu_array.js.htm',
-	    'resources/js/agency/menu_script.js'
-	], 'public/js/app.js');
+   .js('resources/js/gentelella.js', 'public/js/gentelella.js')

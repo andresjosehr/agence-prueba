@@ -122,6 +122,42 @@ window.relatorio = function (url) {
   }
 };
 
+function getRandomRgb() {
+  var num = Math.round(0xffffff * Math.random());
+  var r = num >> 16;
+  var g = num >> 8 & 255;
+  var b = num & 255;
+  return 'rgba(' + r + ', ' + g + ', ' + b + ', .5)';
+}
+
+function InizializarBarChar() {
+  var Datase = [];
+
+  for (var i = 0; i <= size; i++) {
+    var e = 0;
+    var k = 0;
+    var valores = [];
+    $.each(Datos, function (usr, tipo) {
+      $.each(tipo, function (este, valor) {
+        valores[k] = new Array();
+        e = 0;
+        $.each(valor, function (h1, h2) {
+          valores[k][e] = h2;
+          e++;
+        });
+        k++;
+      });
+    });
+    Datase[i] = {
+      label: Usuarios[i],
+      data: valores[i],
+      backgroundColor: getRandomRgb()
+    };
+  }
+
+  BarChart(FechaMedia, Datase);
+}
+
 /***/ }),
 
 /***/ "./resources/sass/app.scss":
@@ -135,15 +171,27 @@ window.relatorio = function (url) {
 
 /***/ }),
 
+/***/ "./resources/sass/gentelella.scss":
+/*!****************************************!*\
+  !*** ./resources/sass/gentelella.scss ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ 0:
-/*!****************************************************************!*\
-  !*** multi ./resources/js/custom.js ./resources/sass/app.scss ***!
-  \****************************************************************/
+/*!*************************************************************************************************!*\
+  !*** multi ./resources/js/custom.js ./resources/sass/app.scss ./resources/sass/gentelella.scss ***!
+  \*************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! C:\xampp\htdocs\Interline\AgenceDefinitivo\resources\js\custom.js */"./resources/js/custom.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\Interline\AgenceDefinitivo\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\Interline\AgenceDefinitivo\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Interline\AgenceDefinitivo\resources\sass\gentelella.scss */"./resources/sass/gentelella.scss");
 
 
 /***/ })

@@ -22,8 +22,22 @@ class con_desempenhoController extends Controller{
 						    ->getQuery() // Optional: downgrade to non-eloquent builder so we don't build invalid User objects.
 						    ->get();
 
-						    return view("agency.con_desempenho", ["Consultores" => $Consultores]);
+						    return view("gentelella.panel_de_control", ["Consultores" => $Consultores]);
     }
+
+
+
+
+
+
+
+
+
+
+
+    //********************************************************************//
+    //Funcion en la que se recogen los valores del bonton RELATORIO       //
+    //********************************************************************//
 
     public function relatorio(Request $Request)
     {	
@@ -35,8 +49,6 @@ class con_desempenhoController extends Controller{
 			  $FechaMedia[$l]=$i;
 			  $l++;
 			}
-
-    	  // $Datos["Custo"] = DB::table("CAO_SALARIO")->whereIn("co_usuario", $Request->Usuarios)->get();
 
     	  $Fact= CoFatura::join('cao_os', 'cao_fatura.co_os', '=', 'cao_os.co_os')
     	  					->join('cao_usuario', 'cao_os.co_usuario', '=', 'cao_usuario.co_usuario')
@@ -90,9 +102,13 @@ class con_desempenhoController extends Controller{
 				}
 			}
 
-			return view("agency.relatorio", ["Datos" => $Datos, "FechaMedia" => $FechaMedia, "Usuarios" => $Request->Usuarios, "No_User" => json_decode(json_encode(User::select("no_usuario")->whereIn('co_usuario', $Request->Usuarios)->get()), true)]);
+			return view("gentelella.relatorio", ["Datos" => $Datos, "FechaMedia" => $FechaMedia, "Usuarios" => $Request->Usuarios, "No_User" => json_decode(json_encode(User::select("no_usuario")->whereIn('co_usuario', $Request->Usuarios)->get()), true)]);
 
     }
+
+    //********************************************************************//
+    //Funcion en la que se recogen los valores del bonton Pizza           //
+    //********************************************************************//
 
     public function Pizza(Request $Request){
 
@@ -104,8 +120,6 @@ class con_desempenhoController extends Controller{
 			  $FechaMedia[$l]=$i;
 			  $l++;
 			}
-
-    	  // $Datos["Custo"] = DB::table("CAO_SALARIO")->whereIn("co_usuario", $Request->Usuarios)->get();
 
     	  $Fact= CoFatura::join('cao_os', 'cao_fatura.co_os', '=', 'cao_os.co_os')
     	  					->join('cao_usuario', 'cao_os.co_usuario', '=', 'cao_usuario.co_usuario')
@@ -156,30 +170,24 @@ class con_desempenhoController extends Controller{
 				}
 			}
 
-			function random_color_part() {
-			    return str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT);
-			}
-			function random_color() {
-			    return random_color_part() . random_color_part() . random_color_part();
-			}
-
-			$DataEmp=' <graph caption="Participação na Receita" bgColor="F1f1f1" decimalPrecision="1" showPercentageValues="1" showNames="1" numberPrefix="" showValues="1" showPercentageInLabel="1" pieYScale="45" pieBorderAlpha="40" pieFillAlpha="70" pieSliceDepth="15" pieRadius="100">';
-			$Data='';
+			
 			for ($i=0; $i <count($Request->Usuarios); $i++) { 
-				$Data=$Data.'<set value="'.array_sum($Datos[$Request->Usuarios[$i]]["Ganancias"]).'" name="'.$Request->Usuarios[$i].'" color="'.random_color().'" /> ';
+				$Data[$i]=array_sum($Datos[$Request->Usuarios[$i]]["Ganancias"]);
+				$Color[$i]="#".self::random_color();
 			}
-			$DataEnd='</graph>';
-			$Pizza=$DataEmp.$Data.$DataEnd;
-
-
-
-				$file = fopen(public_path()."/charts/data_pizza.xml", "w");
-
-				fwrite($file, $Pizza . PHP_EOL);
-
-				fclose($file);
-				return view("agency.pizzachart.pizza");
+			?><script>
+				var Usuarios = '<?php echo json_encode($Request->Usuarios) ?>'
+	         	var Data = '<?php echo json_encode($Data) ?>'
+	         	var Color = '<?php echo json_encode($Color) ?>'
+	         	PrincipioPie();
+			</script><?php
+				return view("gentelella.pie_chart");
     }
+
+
+    //********************************************************************//
+    //Funcion en la que se recogen los valores del bonton Grafico         //
+    //********************************************************************//
 
     public function grafico(Request $Request){
     	$Request->FechaInicio = date("Y-m-d", strtotime($Request->FechaInicio));
@@ -226,76 +234,36 @@ class con_desempenhoController extends Controller{
 					if (isset($Datos[$Request->Usuarios[$i]]["Ganancias"][date("Y-m", strtotime($FechaMedia[$j]))])) {
 					} else{
 						$Datos[$Request->Usuarios[$i]]["Ganancias"][date("Y-m", strtotime($FechaMedia[$j]))]=0;
-						$Datos[$Request->Usuarios[$i]]["Comision"][date("Y-m", strtotime($FechaMedia[$j]))]=0;
-						$Datos[$Request->Usuarios[$i]]["Lucro"][date("Y-m", strtotime($FechaMedia[$j]))]=0;
 					}
 				}
 			}
 
-			function random_color_part() {
-			    return str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT);
-			}
-			function random_color() {
-			    return random_color_part() . random_color_part() . random_color_part();
+			$Usuarios = User::select("no_usuario")->whereIn('co_usuario', $Request->Usuarios)->get();
+			for ($i=0; $i <count($Usuarios) ; $i++) { 
+				$Usr[$i]=$Usuarios[$i]->no_usuario;
 			}
 
-
-			$DataEmpEmp='<graph bgColor="F1f1f1" caption="Performance Comercial" subCaption="Janeiro de 2007 a Maio de 2007" showValues="0" divLineDecimalPrecision="2" formatNumberScale="2" limitsDecimalPrecision="2" PYAxisName="" SYAxisName="" decimalSeparator="," thousandSeparator="." SYAxisMaxValue="32000" PYAxisMaxValue="32000">';
-			$labels='';
-
-			for ($i=0; $i <count($FechaMedia); $i++) {
-				$labels=$labels.'<category name="'.$FechaMedia[$i].'" hoverText="'.$FechaMedia[$i].'" />';
-			}
-			$labels="<categories>".$labels."</categories>";
-
-
-			for ($i=0; $i <count($Request->Usuarios); $i++) {
-				$Data[$i]='';
-				for ($j=0; $j <count($FechaMedia); $j++) {
-					if ($j==0) {
-						$DataEmp='<dataset seriesName="'.$Request->Usuarios[$i].'" color="#'.random_color().'" numberPrefix="R$ ">';
-					}
-					$Data[$i]=$Data[$i].'<set value="'.$Datos[$Request->Usuarios[$i]]["Ganancias"][date("Y-m", strtotime($FechaMedia[$j]))].'" />';
-					if ($j==count($FechaMedia)-1) {
-						$Data[$i]=$DataEmp.$Data[$i].'</dataset>';
-					}
-				}
-			}
+			?><script>
+	         	var FechaMedia = '<?php echo json_encode($FechaMedia); ?>';
+	         	var Datos = '<?php echo json_encode($Datos); ?>';
+	         	var Usuarios = '<?php echo json_encode($Usr) ?>'
+	         	PrincipioBar();
+				var size = Object.size(Datos);
+				var valores=InizializarBarChar();
+			</script><?php
+			
+			return view("gentelella.bar_chart",["Usuarios" => $Request->Usuarios,]);
 
 
-			$Dataset="";
-			for ($i=0; $i <count($Data); $i++) {
-				$Dataset=$Dataset.$Data[$i];
-			}
-
-			$Salario=DB::table("cao_salario")->select("brut_salario")
-									->whereIn('CO_USUARIO', $Request->Usuarios)->get();
-			$Salario = json_decode(json_encode($Salario), true);
-			$Sal=0;
-			for ($i=0; $i <count($Salario) ; $i++) { 
-				$Sal=$Sal+$Salario[$i]["brut_salario"];
-			}
-			if ($Salario!=0) {
-				 $Sal= $Sal/count($Request->Usuarios);
-			} else{
-				 $Sal= 0;
-			}
-
-			$CostoFijo='';
-			for ($i=0; $i <count($FechaMedia); $i++) { 
-				$CostoFijo=$CostoFijo.'<set value="'.$Sal.'" /> ';
-			}
-			$CostoFijo='<dataset lineThickness="3" seriesName="Custo Fixo Médio" numberPrefix="R$ " parentYAxis="S" color="FF0000" anchorBorderColor="FF8000">'.$CostoFijo."</dataset>";
-
-			$Grafico=$DataEmpEmp.$labels.$Dataset.$CostoFijo."</graph>";
-			$file = fopen(public_path()."/charts/data_line_bar.xml", "w");
-
-			fwrite($file, $Grafico . PHP_EOL);
-			fclose($file);
-
-			return view("agency.barchart.barchart");
-
-
-				
+				?><script></script><?php
     }
+
+
+    public function random_color_part() {
+		return str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT);
+			}
+	public function random_color() {
+	    return self::random_color_part() . self::random_color_part() . self::random_color_part();
+	}
+
 }

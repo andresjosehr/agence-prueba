@@ -16,6 +16,10 @@ Route::get('/', function () {
     return redirect('dashboard');
 });
 
+Route::get('gentelella', function () {
+    return view('gentelella.panel_de_control');
+});
+
 Route::get('/agency', "con_desempenhoController@index");
 
 

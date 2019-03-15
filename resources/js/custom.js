@@ -24,3 +24,36 @@
 
               }
         }
+
+                    function getRandomRgb() {
+                      var num = Math.round(0xffffff * Math.random());
+                      var r = num >> 16;
+                      var g = num >> 8 & 255;
+                      var b = num & 255;
+                      return 'rgba(' + r + ', ' + g + ', ' + b + ', .5)';
+                    }
+
+                  function InizializarBarChar() {
+                  var Datase=[];
+                  for (var i = 0; i <= size; i++) {
+                    var e=0; var k=0; var valores=[]; 
+                     $.each( Datos, function( usr, tipo ) {
+                      $.each( tipo, function( este, valor ) {
+                        valores[k] = new Array();
+                        e=0;
+                        $.each( valor, function( h1, h2 ) {
+                            valores[k][e]=h2;
+                            e++;
+                          });
+                          k++;
+                        });
+                      });
+                    Datase[i] ={
+                                  label: Usuarios[i],
+                                  data: valores[i],
+                                  backgroundColor: getRandomRgb(),
+
+                              }
+                    }
+                    BarChart(FechaMedia, Datase)
+                  }
