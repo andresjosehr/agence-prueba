@@ -1,3 +1,4 @@
+<?php sort($Usuarios); ?>
 
 @for ($i = 0; $i <count($Datos); $i++)
 <div class="row">
@@ -24,6 +25,7 @@
                       </div>
                       <div class="x_content">
                         <div class="table-responsive">
+                          <div id="elim<?php echo $i; ?>"></div>
                           <table class="table table-striped jambo_table bulk_action">
                             <thead>
                               <tr class="headings">
@@ -38,15 +40,13 @@
                             <tbody>
                               @for ($k = 0; $k <count($FechaMedia); $k++)
                                 <?php
-                                  if ($Datos[$Usuarios[$i]]["Ganancias"][date("Y-m", strtotime($FechaMedia[$k]))]==0) {
-                                    $Costo=0;
-                                  } else{
+                                  if (isset($Datos[$Usuarios[$i]]["CostoFijo"])) {
+                                    $SaldoCosto[$k]=$Datos[$Usuarios[$i]]["CostoFijo"];
                                     $Costo=$Datos[$Usuarios[$i]]["CostoFijo"];
 
-                                    $SaldoCosto[$k]=$Datos[$Usuarios[$i]]["CostoFijo"];
-                                  }
-                                  if (!isset($SaldoCosto)) {
-                                    $SaldoCosto[$k]=0;
+                                  } else{
+                                     $SaldoCosto[$k]=0;
+                                     $Costo=0;
                                   }
                                 ?>
                               <tr class="even pointer">>
@@ -77,6 +77,9 @@
               </div>
 
             <br><br>
+            <script>
+              $.trim($($('#elim<?php echo $i; ?>')[0].nextSibling).remove())
+            </script>
               @php
                 unset($SaldoCosto)
               @endphp

@@ -225,8 +225,10 @@ class con_desempenhoController extends Controller{
 						if (date("Y-m", strtotime($FechaMedia[$j]))==date("Y-m", strtotime($Fact[$k]["data_emissao"])) && $Fact[$k]["co_usuario"]==$Request->Usuarios[$i]) {
 							if (isset($Datos[$Request->Usuarios[$i]]["Ganancias"][date("Y-m", strtotime($Fact[$k]["data_emissao"]))])) {
 								$Datos[$Request->Usuarios[$i]]["Ganancias"][date("Y-m", strtotime($Fact[$k]["data_emissao"]))]=$Datos[$Request->Usuarios[$i]]["Ganancias"][date("Y-m", strtotime($Fact[$k]["data_emissao"]))]+($Fact[$k]["valor"]-(($Fact[$k]["valor"]*$Fact[$k]["total_imp_inc"])/100));
+								$CostoFijoBarra[$i]=$Fact[$k]["brut_salario"];
 							} else{
 								$Datos[$Request->Usuarios[$i]]["Ganancias"][date("Y-m", strtotime($Fact[$k]["data_emissao"]))]=$Fact[$k]["valor"]-(($Fact[$k]["valor"]*$Fact[$k]["total_imp_inc"])/100);
+								$CostoFijoBarra[$i]=$Fact[$k]["brut_salario"];
 							}	
 						} 
 					}
@@ -246,17 +248,18 @@ class con_desempenhoController extends Controller{
 			for ($i=0; $i <count($Usuarios) ; $i++) { 
 				$Usr[$i]=$Usuarios[$i]->no_usuario;
 			}
-
+			$CostoFijoPromedio = array_sum($CostoFijoBarra)/count($Request->Usuarios);
 			?><script>
 	         	var FechaMedia = '<?php echo json_encode($FechaMedia); ?>';
 	         	var Datos = '<?php echo json_encode($Datos); ?>';
 	         	var Usuarios = '<?php echo json_encode($Usr) ?>'
+	         	var CostoFijoPromedio = '<?php echo $CostoFijoPromedio ?>'
 	         	PrincipioBar();
 				var size = Object.size(Datos);
 				var valores=InizializarBarChar();
 			</script><?php
-			
-			return view("gentelella.bar_chart",["Usuarios" => $Request->Usuarios,]);
+
+			return view("gentelella.bar_chart",["Usuarios" => $Request->Usuarios, "FechaMedia" => $FechaMedia]);
 
 
 				?><script></script><?php

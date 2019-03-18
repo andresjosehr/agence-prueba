@@ -28,7 +28,14 @@
                  </div>
                 </div>
                 <script>
-                    var Datica_=[@for ($i = 0; $i <count($Usuarios) ; $i++) valores['{{$i}}'], @endfor];
+
+                    var Datica_=[{
+                                            label: "Custo Fixo Médio",
+                                              type:'line',
+                                              data: [@for ($i = 1; $i <count($FechaMedia)+1 ; $i++) CostoFijoPromedio, @endfor],
+                                              borderColor: '#EC932F',
+                                              backgroundColor: 'transparent'
+                                      },@for ($i = 1; $i <count($Usuarios) ; $i++) valores['{{$i}}'], @endfor];
                     BarChart(FechaMedia, Datica_);
                     OcultarLoaders("2");
                   </script>
