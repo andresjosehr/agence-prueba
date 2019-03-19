@@ -35,7 +35,7 @@
                                               data: [@for ($i = 1; $i <count($FechaMedia)+1 ; $i++) CostoFijoPromedio, @endfor],
                                               borderColor: '#EC932F',
                                               backgroundColor: 'transparent'
-                                      },@for ($i = 1; $i <count($Usuarios) ; $i++) valores['{{$i}}'], @endfor];
+                                      },@for ($i = 1; $i <count($Usuarios)+1 ; $i++) valores['{{$i-1}}'], @endfor];
                     BarChart(FechaMedia, Datica_);
                     OcultarLoaders("2");
                   </script>

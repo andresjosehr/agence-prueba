@@ -18,7 +18,8 @@ class con_desempenhoController extends Controller{
 							    ['permissao_sistema.co_sistema', '=', '1'],
 							    ['permissao_sistema.in_ativo', '=', 'S'],
 							])
-				     ->whereIn('permissao_sistema.in_ativo', array(0, 1, 1))
+				     ->whereIn('permissao_sistema.co_tipo_usuario', array(0, 1, 2))
+				     ->orderBy("no_usuario", "ASC")
 						    ->getQuery() // Optional: downgrade to non-eloquent builder so we don't build invalid User objects.
 						    ->get();
 
@@ -241,8 +242,13 @@ class con_desempenhoController extends Controller{
 					} else{
 						$Datos[$Request->Usuarios[$i]]["Ganancias"][date("Y-m", strtotime($FechaMedia[$j]))]=0;
 					}
+					$Valores[$i][$j]=$Datos[$Request->Usuarios[$i]]["Ganancias"][date("Y-m", strtotime($FechaMedia[$j]))];
 				}
+
+
 			}
+
+
 
 			$Usuarios = User::select("no_usuario")->whereIn('co_usuario', $Request->Usuarios)->get();
 			for ($i=0; $i <count($Usuarios) ; $i++) { 
@@ -250,6 +256,9 @@ class con_desempenhoController extends Controller{
 			}
 			$CostoFijoPromedio = array_sum($CostoFijoBarra)/count($Request->Usuarios);
 			?><script>
+						
+				var valorcito ='<?php echo json_encode($Valores); ?>';
+				valorcito=JSON.parse(valorcito);
 	         	var FechaMedia = '<?php echo json_encode($FechaMedia); ?>';
 	         	var Datos = '<?php echo json_encode($Datos); ?>';
 	         	var Usuarios = '<?php echo json_encode($Usr) ?>'
@@ -257,12 +266,10 @@ class con_desempenhoController extends Controller{
 	         	PrincipioBar();
 				var size = Object.size(Datos);
 				var valores=InizializarBarChar();
-			</script><?php
 
+			</script><?php
 			return view("gentelella.bar_chart",["Usuarios" => $Request->Usuarios, "FechaMedia" => $FechaMedia]);
 
-
-				?><script></script><?php
     }
 
 
