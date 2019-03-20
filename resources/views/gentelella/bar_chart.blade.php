@@ -21,8 +21,8 @@
                         </ul>
                         <div class="clearfix"></div>
                       </div>
-                      <div class="x_content x_content_bar">
-                        <canvas id="bar_chart" width="400" height="50"></canvas>
+                      <div class="x_content x_content_bar" style="height: 400px">
+                        <canvas id="bar_chart" width="800" height="250"></canvas>
                       </div>
                    </div>
                  </div>
@@ -38,5 +38,7 @@
                                       },@for ($i = 1; $i <count($Usuarios)+1 ; $i++) valores['{{$i-1}}'], @endfor];
                     BarChart(FechaMedia, Datica_);
                     OcultarLoaders("2");
+
+                    // document.getElementById("bar_chart").height = 10;
                   </script>
             <br><br>

@@ -47,8 +47,6 @@
 
 
                   window.BarChart=function(Fecha, Datica) {
-                    $(".x_content_bar").empty();
-                    $(".x_content_bar").html('<canvas id="bar_chart" width="400" height="50"></canvas>');
                     var ctx = document.getElementById('bar_chart').getContext('2d');
                     var myChart = new Chart(ctx, {
                         type: 'bar',
