@@ -211,11 +211,11 @@ window.PieChart = function () {
   new Chart(document.getElementById("pie_chart"), {
     type: 'pie',
     data: {
-      labels: Usuarios,
+      labels: Dat["Usuarios"],
       datasets: [{
         label: "Population (millions)",
         backgroundColor: Color,
-        data: Data
+        data: Dat["Ganancias"]
       }]
     },
     options: {}
