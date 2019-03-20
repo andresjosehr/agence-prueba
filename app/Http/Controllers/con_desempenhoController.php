@@ -259,6 +259,7 @@ class con_desempenhoController extends Controller{
 			$Usuarios = User::select("no_usuario")->whereIn('co_usuario', $Request->Usuarios)->get();
 			for ($i=0; $i <count($Usuarios) ; $i++) { 
 				$Usr[$i]=$Usuarios[$i]->no_usuario;
+				sort($Usr);
 			}
 			$CostoFijoPromedio = array_sum($CostoFijoBarra)/count($Request->Usuarios);
 			?><script>
