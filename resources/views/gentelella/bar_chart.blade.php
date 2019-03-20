@@ -21,7 +21,7 @@
                         </ul>
                         <div class="clearfix"></div>
                       </div>
-                      <div class="x_content x_content_bar" style="height: 400px">
+                      <div class="x_content x_content_bar" style="height: 500px">
                         <canvas id="bar_chart" width="800" height="250"></canvas>
                       </div>
                    </div>
