@@ -53,12 +53,11 @@ class con_desempenhoController extends Controller{
 
     	  $Fact= CoFatura::join('cao_os', 'cao_fatura.co_os', '=', 'cao_os.co_os')
     	  					->join('cao_usuario', 'cao_os.co_usuario', '=', 'cao_usuario.co_usuario')
-    	  					->join('cao_salario', 'cao_salario.co_usuario', '=', 'cao_usuario.co_usuario')
 				     ->where([
 							    ['data_emissao', '>=', $Request->FechaInicio],
 							    ['data_emissao', '<=', $Request->FechaFin],
 							])
-				     ->whereIn('cao_usuario.co_usuario', $Request->Usuarios)
+				     ->whereIn('cao_os.co_usuario', $Request->Usuarios)
 				     ->orderBy("data_emissao", "ASC")
 						    ->getQuery() 
 						    ->get();
@@ -72,12 +71,20 @@ class con_desempenhoController extends Controller{
 							if (isset($Datos[$Request->Usuarios[$i]]["Ganancias"][date("Y-m", strtotime($Fact[$k]["data_emissao"]))])) {
 								$Datos[$Request->Usuarios[$i]]["Ganancias"][date("Y-m", strtotime($Fact[$k]["data_emissao"]))]=$Datos[$Request->Usuarios[$i]]["Ganancias"][date("Y-m", strtotime($Fact[$k]["data_emissao"]))]+($Fact[$k]["valor"]-(($Fact[$k]["valor"]*$Fact[$k]["total_imp_inc"])/100));
 								$Datos[$Request->Usuarios[$i]]["Comision"][date("Y-m", strtotime($Fact[$k]["data_emissao"]))]=$Datos[$Request->Usuarios[$i]]["Comision"][date("Y-m", strtotime($Fact[$k]["data_emissao"]))]+((($Fact[$k]["valor"]-(($Fact[$k]["valor"]*$Fact[$k]["total_imp_inc"])/100))*$Fact[$k]["comissao_cn"])/100);
+								if (isset($Fact[$k]["brut_salario"])) {
 								$Datos[$Request->Usuarios[$i]]["CostoFijo"]=$Fact[$k]["brut_salario"];
+								} else{
+									$Datos[$Request->Usuarios[$i]]["CostoFijo"]=0;
+								}
 								$Datos[$Request->Usuarios[$i]]["Lucro"][date("Y-m", strtotime($Fact[$k]["data_emissao"]))]=($Datos[$Request->Usuarios[$i]]["Lucro"][date("Y-m", strtotime($Fact[$k]["data_emissao"]))])+($Datos[$Request->Usuarios[$i]]["Ganancias"][date("Y-m", strtotime($Fact[$k]["data_emissao"]))]-($Datos[$Request->Usuarios[$i]]["Comision"][date("Y-m", strtotime($Fact[$k]["data_emissao"]))])-$Datos[$Request->Usuarios[$i]]["CostoFijo"]);
 							} else{
 								$Datos[$Request->Usuarios[$i]]["Ganancias"][date("Y-m", strtotime($Fact[$k]["data_emissao"]))]=$Fact[$k]["valor"]-(($Fact[$k]["valor"]*$Fact[$k]["total_imp_inc"])/100);
 								$Datos[$Request->Usuarios[$i]]["Comision"][date("Y-m", strtotime($Fact[$k]["data_emissao"]))]=(($Fact[$k]["valor"]-(($Fact[$k]["valor"]*$Fact[$k]["total_imp_inc"])/100))*$Fact[$k]["comissao_cn"])/100;
-								$Datos[$Request->Usuarios[$i]]["CostoFijo"]=$Fact[$k]["brut_salario"];$Fact[$k]["data_emissao"];
+								if (isset($Fact[$k]["brut_salario"])) {
+								$Datos[$Request->Usuarios[$i]]["CostoFijo"]=$Fact[$k]["brut_salario"];
+								} else{
+									$Datos[$Request->Usuarios[$i]]["CostoFijo"]=0;
+								}
 								$Datos[$Request->Usuarios[$i]]["Lucro"][date("Y-m", strtotime($Fact[$k]["data_emissao"]))]=$Datos[$Request->Usuarios[$i]]["Ganancias"][date("Y-m", strtotime($Fact[$k]["data_emissao"]))]-($Datos[$Request->Usuarios[$i]]["Comision"][date("Y-m", strtotime($Fact[$k]["data_emissao"]))])-$Datos[$Request->Usuarios[$i]]["CostoFijo"];
 							}
 							
@@ -124,12 +131,11 @@ class con_desempenhoController extends Controller{
 
     	  $Fact= CoFatura::join('cao_os', 'cao_fatura.co_os', '=', 'cao_os.co_os')
     	  					->join('cao_usuario', 'cao_os.co_usuario', '=', 'cao_usuario.co_usuario')
-    	  					->join('cao_salario', 'cao_salario.co_usuario', '=', 'cao_usuario.co_usuario')
 				     ->where([
 							    ['data_emissao', '>=', $Request->FechaInicio],
 							    ['data_emissao', '<=', $Request->FechaFin],
 							])
-				     ->whereIn('cao_usuario.co_usuario', $Request->Usuarios)
+				     ->whereIn('cao_os.co_usuario', $Request->Usuarios)
 				     ->orderBy("data_emissao", "ASC")
 						    ->getQuery() 
 						    ->get();
@@ -214,12 +220,11 @@ class con_desempenhoController extends Controller{
 
     	  $Fact= CoFatura::join('cao_os', 'cao_fatura.co_os', '=', 'cao_os.co_os')
     	  					->join('cao_usuario', 'cao_os.co_usuario', '=', 'cao_usuario.co_usuario')
-    	  					->join('cao_salario', 'cao_salario.co_usuario', '=', 'cao_usuario.co_usuario')
 				     ->where([
 							    ['data_emissao', '>=', $Request->FechaInicio],
 							    ['data_emissao', '<=', $Request->FechaFin],
 							])
-				     ->whereIn('cao_usuario.co_usuario', $Request->Usuarios)
+				     ->whereIn('cao_os.co_usuario', $Request->Usuarios)
 				     ->orderBy("data_emissao", "ASC")
 						    ->getQuery() 
 						    ->get();
@@ -232,10 +237,21 @@ class con_desempenhoController extends Controller{
 						if (date("Y-m", strtotime($FechaMedia[$j]))==date("Y-m", strtotime($Fact[$k]["data_emissao"])) && $Fact[$k]["co_usuario"]==$Request->Usuarios[$i]) {
 							if (isset($Datos[$Request->Usuarios[$i]]["Ganancias"][date("Y-m", strtotime($Fact[$k]["data_emissao"]))])) {
 								$Datos[$Request->Usuarios[$i]]["Ganancias"][date("Y-m", strtotime($Fact[$k]["data_emissao"]))]=$Datos[$Request->Usuarios[$i]]["Ganancias"][date("Y-m", strtotime($Fact[$k]["data_emissao"]))]+($Fact[$k]["valor"]-(($Fact[$k]["valor"]*$Fact[$k]["total_imp_inc"])/100));
+								if (isset($Fact[$k]["brut_salario"])) {
 								$CostoFijoBarra[$i]=$Fact[$k]["brut_salario"];
+								} else{
+									$CostoFijoBarra[$i]=0;
+								}
 							} else{
 								$Datos[$Request->Usuarios[$i]]["Ganancias"][date("Y-m", strtotime($Fact[$k]["data_emissao"]))]=$Fact[$k]["valor"]-(($Fact[$k]["valor"]*$Fact[$k]["total_imp_inc"])/100);
+
+								if (isset($Fact[$k]["brut_salario"])) {
 								$CostoFijoBarra[$i]=$Fact[$k]["brut_salario"];
+								} else{
+									$CostoFijoBarra[$i]=0;
+								}
+
+								
 							}	
 						} 
 					}
